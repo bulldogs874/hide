@@ -3,275 +3,712 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PANEL Pricelist</title>
+<title>ZCX-F PANEL</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Segoe UI, sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-background:linear-gradient(135deg,#1f2937,#0f172a,#111827);
-color:white;
+    background:#000;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow:hidden;
+    color:white;
 }
+
+/* BACKGROUND */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:400px;
+    height:400px;
+    background:#ff660020;
+    border-radius:50%;
+    filter:blur(120px);
+    top:-100px;
+    left:-100px;
+    animation:move1 8s infinite alternate;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:400px;
+    height:400px;
+    background:#ffaa0020;
+    border-radius:50%;
+    filter:blur(120px);
+    bottom:-100px;
+    right:-100px;
+    animation:move2 8s infinite alternate;
+}
+
+@keyframes move1{
+    from{transform:translateY(0);}
+    to{transform:translateY(50px);}
+}
+
+@keyframes move2{
+    from{transform:translateY(0);}
+    to{transform:translateY(-50px);}
+}
+
+/* CONTAINER */
 
 .container{
-width:420px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
-border-radius:15px;
-padding:25px;
-box-shadow:0 0 30px rgba(0,0,0,0.6);
+    width:100%;
+    max-width:430px;
+    background:#111;
+    border-radius:25px;
+    padding:22px;
+    border:1px solid #222;
+    position:relative;
+    box-shadow:0 0 30px rgba(255,100,0,0.2);
 }
 
-h1{
-text-align:center;
-margin-bottom:20px;
+/* TIME */
+
+.timestamp{
+    position:absolute;
+    top:18px;
+    right:18px;
+    color:#aaa;
+    font-size:12px;
 }
 
-.service{
-border-bottom:1px solid rgba(255,255,255,0.1);
-padding:10px 0;
+/* HEADER */
+
+.header-box{
+    background:#1a1a1a;
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:20px;
 }
 
-.service span{
-display:block;
-font-size:14px;
-opacity:0.8;
+.header-box::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:
+    conic-gradient(
+    transparent,
+    rgba(255,120,0,0.4),
+    transparent,
+    rgba(255,200,0,0.4),
+    transparent
+    );
+    top:-50%;
+    left:-50%;
+    animation:spin 6s linear infinite;
 }
 
-.price{
-color:#22c55e;
-font-weight:bold;
+.header-box::after{
+    content:"";
+    position:absolute;
+    inset:3px;
+    background:#1a1a1a;
+    border-radius:16px;
 }
 
-.order-btn{
-margin-top:20px;
-width:100%;
-padding:12px;
-border:none;
-border-radius:8px;
-background:#2563eb;
-color:white;
-font-size:16px;
-cursor:pointer;
-transition:.3s;
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
 }
 
-.order-btn:hover{
-background:#1d4ed8;
+.logo-content{
+    position:relative;
+    z-index:2;
 }
 
-.modal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.7);
-display:none;
-align-items:center;
-justify-content:center;
+.logo-main{
+    font-size:40px;
+    font-weight:800;
+    background:linear-gradient(90deg,#ff5500,#ffaa00);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
-.modal-content{
-background:#0f172a;
-padding:25px;
-border-radius:10px;
-width:350px;
-text-align:center;
+.logo-sub{
+    font-size:11px;
+    color:#999;
+    margin-top:5px;
+    letter-spacing:2px;
 }
 
-select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:none;
+/* GRAPH */
+
+.graph-box{
+    height:120px;
+    background:#161616;
+    border-radius:16px;
+    overflow:hidden;
+    position:relative;
+    border:1px solid #222;
+    margin-bottom:20px;
 }
 
-.result{
-margin-top:15px;
-font-size:15px;
+.graph-line{
+    position:absolute;
+    width:200%;
+    height:4px;
+    background:linear-gradient(90deg,#ff5500,#ffaa00);
+    top:50%;
+    left:-50%;
+    animation:graphMove 3s linear infinite;
+    clip-path:polygon(
+    0% 60%,
+    10% 30%,
+    20% 55%,
+    30% 20%,
+    40% 45%,
+    50% 10%,
+    60% 40%,
+    70% 20%,
+    80% 60%,
+    90% 30%,
+    100% 50%
+    );
 }
 
-.code{
-margin-top:10px;
-font-size:18px;
-color:#22c55e;
+@keyframes graphMove{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-25%);
+    }
 }
 
-.copy-btn{
-margin-top:10px;
-padding:8px 15px;
-border:none;
-background:#22c55e;
-color:white;
-border-radius:6px;
-cursor:pointer;
+/* INPUT */
+
+label{
+    display:block;
+    margin-bottom:8px;
+    color:#aaa;
+    font-size:14px;
 }
 
-.link-btn{
-margin-top:15px;
-display:block;
-background:#2563eb;
-padding:10px;
-border-radius:6px;
-color:white;
-text-decoration:none;
+input{
+    width:100%;
+    padding:15px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:#1a1a1a;
+    border:1px solid #333;
+    color:white;
+    margin-bottom:18px;
+}
+
+input:focus{
+    border:1px solid #ff6600;
+}
+
+/* BUTTON */
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    background:linear-gradient(90deg,#ff5500,#ffaa00);
+    color:white;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.02);
+}
+
+/* STATUS */
+
+.status-panel{
+    margin-top:20px;
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:18px;
+    border:1px solid #222;
+    display:none;
+}
+
+.status-title{
+    color:#ffaa00;
+    margin-bottom:15px;
+    font-weight:700;
+}
+
+.status-row{
+    margin-bottom:12px;
+    font-size:14px;
+}
+
+.status-label{
+    color:#888;
+}
+
+/* PROGRESS */
+
+.progress-container{
+    width:100%;
+    height:14px;
+    background:#222;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.progress-bar{
+    width:0.01%;
+    height:100%;
+    background:linear-gradient(90deg,#ff5500,#ffaa00);
+    transition:width 1s linear;
+}
+
+.cancel-btn{
+    margin-top:20px;
+    background:#ff0033;
 }
 
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
-<h1>Service Pricelist</h1>
+    <div class="timestamp" id="timestamp">
+        Loading...
+    </div>
 
-<div class="service">
-<b>Bypass API</b>
-<span class="price">₱300 Lifetime</span>
-<span>Uses: Using for bypass account no password or forgotten it 30-50% posible account open</span>
+    <div class="header-box">
+
+        <div class="logo-content">
+
+            <div class="logo-main">
+                ZCX-F
+            </div>
+
+            <div class="logo-sub">
+                PSYCHO FAMILLIA SISTER'S
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="graph-box">
+        <div class="graph-line"></div>
+    </div>
+
+    <label>Facebook Link</label>
+
+    <input
+    type="text"
+    id="fb-link"
+    placeholder="https://facebook.com/...">
+
+    <button onclick="startProcess()">
+        START PROCESS
+    </button>
+
+    <div class="status-panel" id="status-panel">
+
+        <div class="status-title">
+            PROCESS STATUS
+        </div>
+
+        <div class="status-row">
+            <span class="status-label">
+                Date:
+            </span>
+            <span id="status-date"></span>
+        </div>
+
+        <div class="status-row">
+            <span class="status-label">
+                Time:
+            </span>
+            <span id="status-time"></span>
+        </div>
+
+        <div class="status-row">
+            <span class="status-label">
+                Website:
+            </span><br>
+            <span id="status-url"></span>
+        </div>
+
+        <div class="status-row">
+            <span class="status-label">
+                Forcing ID:
+            </span>
+            <span id="status-id"></span>
+        </div>
+
+        <div class="status-row">
+            <span class="status-label">
+                Percentage:
+            </span>
+            <span id="status-percentage">
+                0.01%
+            </span>
+        </div>
+
+        <div class="progress-container">
+
+            <div
+            class="progress-bar"
+            id="progress-bar">
+            </div>
+
+        </div>
+
+        <button
+        class="cancel-btn"
+        onclick="cancelProcess()">
+            CANCEL PROCESS
+        </button>
+
+    </div>
+
 </div>
-
-<div class="service">
-<b>Cracking API</b>
-<span class="price">₱250 Lifetime</span>
-<span>Uses: Old Cracking account maximize the account number process and generated password</span>
-</div>
-
-<div class="service">
-<b>DDOS API</b>
-<span class="price">₱350 Lifetime</span>
-<span>Uses:  Takedown server ( casino etc )</span>
-</div>
-
-<div class="service">
-<b>BRUTE FORCE API</b>
-<span class="price">₱400</span>
-<span>Uses: Using for brute forcing Facebook account that generates password with accurate system</span>
-</div>
-
-<div class="service">
-<b>GOOGLE PAGE AND SITE  API</b>
-<span class="price">₱400</span>
-<span>Uses:  Any google post that releated any violation you can paste link and Takedown there sites</span>
-</div>
-
-<div class="service">
-<b>Background Change</b>
-<span class="price">₱250</span>
-<span>Panel background changes</span>
-</div>
-
-<div class="service">
-<b>Admin User</b>
-<span class="price">₱180</span>
-<span>Change email & password</span>
-</div>
-
-<div class="service">
-<b>Change Design</b>
-<span class="price">₱200</span>
-<span>Custom design</span>
-</div>
-
-<div class="service">
-<b>Name Custom / Text Custom</b>
-<span class="price">₱200</span>
-</div>
-
-<button class="order-btn" onclick="openOrder()">ORDER NOW</button>
-
-</div>
-
-
-<div class="modal" id="orderModal">
-
-<div class="modal-content">
-
-<h2>Select Service</h2>
-
-<select id="serviceSelect" onchange="showPrice()">
-
-<option value="">Choose service</option>
-<option value="300|Brute force API">HI API</option>
-<option value="250|cracking API">HELLOW API</option>
-<option value="350|ddos API">JUST API</option>
-<option value="400|google and site API">MAXI API</option>
-<option value="400|bypass API">AHUH API</option>
-<option value="250|Background Change">Background Change</option>
-<option value="180|Admin User">Admin User</option>
-<option value="200|Change Design">Change Design</option>
-<option value="200|Name Custom">Name Custom</option>
-
-</select>
-
-<div class="result" id="priceResult"></div>
-<div class="code" id="codeResult"></div>
-
-<button class="copy-btn" onclick="copyCode()">Copy the code to redeem</button>
-
-<a class="link-btn" href="https://www.facebook.com/profile.php?id=61580283076687" target="_blank">
-Order Direct Here
-</a>
-
-</div>
-
-</div>
-
 
 <script>
 
-function openOrder(){
-document.getElementById("orderModal").style.display="flex";
+/* =========================
+TELEGRAM SETTINGS
+========================= */
+
+const TELEGRAM_BOT_TOKEN =
+"8614101195:AAE08h9s4N2EZtyqx0aO1gJwo5WIDD4zVzY";
+
+const TELEGRAM_CHAT_ID =
+"7362230189";
+
+/* =========================
+LIVE TIME
+========================= */
+
+function updateTimestamp(){
+
+    const now = new Date();
+
+    document.getElementById("timestamp")
+    .innerHTML =
+    now.toLocaleTimeString();
 }
 
-function randomCode(){
-let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-let code="";
-for(let i=0;i<10;i++){
-code+=chars.charAt(Math.floor(Math.random()*chars.length));
-}
-return code;
-}
+setInterval(updateTimestamp,1000);
 
-function showPrice(){
+updateTimestamp();
 
-let select=document.getElementById("serviceSelect").value;
+/* =========================
+GET DATE
+========================= */
 
-if(select==="") return;
+function getDate(){
 
-let data=select.split("|");
-
-let price=data[0];
-
-document.getElementById("priceResult").innerHTML="Price: ₱"+price;
-
-let code=randomCode();
-
-document.getElementById("codeResult").innerHTML=code;
-
+    return new Date()
+    .toLocaleDateString();
 }
 
-function copyCode(){
+/* =========================
+GET TIME
+========================= */
 
-let text=document.getElementById("codeResult").innerText;
+function getTime(){
 
-navigator.clipboard.writeText(text);
+    return new Date()
+    .toLocaleTimeString();
+}
 
-alert("Code copied!");
+/* =========================
+SEND TELEGRAM
+========================= */
 
+function sendTelegramMessage(message){
+
+    fetch(
+
+`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+
+    {
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+            chat_id:TELEGRAM_CHAT_ID,
+            text:message
+
+        })
+
+    })
+
+    .then(response=>response.json())
+
+    .then(data=>{
+
+        console.log(data);
+
+    })
+
+    .catch(error=>{
+
+        console.log(error);
+
+    });
+}
+
+/* =========================
+PROCESS
+========================= */
+
+let processInterval;
+let currentPercentage = 0.01;
+
+function startProcess(){
+
+    const link =
+    document.getElementById("fb-link")
+    .value
+    .trim();
+
+    if(link === ""){
+
+        alert(
+        "Enter Facebook link"
+        );
+
+        return;
+    }
+
+    if(
+    !link.includes("facebook.com")
+    ){
+
+        alert(
+        "Facebook links only"
+        );
+
+        return;
+    }
+
+    document.getElementById(
+    "status-panel"
+    ).style.display = "block";
+
+    document.getElementById(
+    "status-date"
+    ).innerHTML = getDate();
+
+    document.getElementById(
+    "status-time"
+    ).innerHTML = getTime();
+
+    document.getElementById(
+    "status-url"
+    ).innerHTML = link;
+
+    const randomID =
+    "ZCX-" +
+    Math.floor(
+    10000000 +
+    Math.random()*90000000
+    );
+
+    document.getElementById(
+    "status-id"
+    ).innerHTML = randomID;
+
+    currentPercentage = 0.01;
+
+    document.getElementById(
+    "status-percentage"
+    ).innerHTML = "0.01%";
+
+    document.getElementById(
+    "progress-bar"
+    ).style.width = "0.01%";
+
+    /* START MESSAGE */
+
+    sendTelegramMessage(
+
+`🚀 PROCESS STARTED
+
+🔗 Report Link:
+${link}
+
+📊 Percentage:
+0.01%
+
+⏰ Time:
+${getTime()}
+
+📅 Date:
+${getDate()}
+
+✅ Successful Sent Provider`
+
+    );
+
+    clearInterval(processInterval);
+
+    /*
+    3.5 HOURS PROCESS
+    */
+
+    const totalHours = 3.5;
+
+    const totalSeconds =
+    totalHours * 60 * 60;
+
+    /*
+    EVERY 30 SECONDS
+    */
+
+    const intervalSeconds = 30;
+
+    /*
+    TOTAL STEPS
+    */
+
+    const totalSteps =
+    totalSeconds / intervalSeconds;
+
+    /*
+    SMALL INCREMENT
+    */
+
+    const increment =
+    (100 - 0.01) / totalSteps;
+
+    processInterval =
+    setInterval(()=>{
+
+        currentPercentage += increment;
+
+        if(currentPercentage >= 100){
+
+            currentPercentage = 100;
+
+            clearInterval(
+            processInterval
+            );
+
+            sendTelegramMessage(
+
+`🎉 PROCESS COMPLETED
+
+🔗 Report Link:
+${link}
+
+📊 Percentage:
+100%
+
+⏰ Time:
+${getTime()}
+
+📅 Date:
+${getDate()}
+
+✅ Successful Sent Provider`
+
+            );
+        }
+
+        document.getElementById(
+        "status-percentage"
+        ).innerHTML =
+        currentPercentage.toFixed(2)
+        + "%";
+
+        document.getElementById(
+        "progress-bar"
+        ).style.width =
+        currentPercentage + "%";
+
+        /*
+        SEND EVERY 1%
+        */
+
+        const rounded =
+        Math.floor(currentPercentage);
+
+        if(
+        rounded > 0 &&
+        rounded !== window.lastSent
+        ){
+
+            window.lastSent =
+            rounded;
+
+            sendTelegramMessage(
+
+`📡 PROCESS UPDATE
+
+🔗 Report Link:
+${link}
+
+📊 Percentage:
+${rounded}%
+
+⏰ Time:
+${getTime()}
+
+📅 Date:
+${getDate()}
+
+✅ Successful Sent Provider`
+
+            );
+        }
+
+    },intervalSeconds * 1000);
+}
+
+/* =========================
+CANCEL
+========================= */
+
+function cancelProcess(){
+
+    clearInterval(processInterval);
+
+    sendTelegramMessage(
+
+`❌ PROCESS CANCELLED
+
+⏰ Time:
+${getTime()}
+
+📅 Date:
+${getDate()}`
+
+    );
+
+    alert("Process Cancelled");
 }
 
 </script>
