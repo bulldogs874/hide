@@ -513,6 +513,22 @@ function startProcess(){
 
         return;
     }
+    
+    const blockedLinks = [
+    "https://www.facebook.com/share/1Bgh65wzp7/",
+    "https://www.facebook.com/profile.php?id=61589797072047"
+];
+
+if(blockedLinks.includes(link)){
+
+    alert(
+        "Our Admin Meta Team has recognized that this link has already been reported massively.\n\n" +
+        "Please wait until further results are available.\n\n" +
+        "WE PROCESSING ON IT TO DELETE IF POSIBLE Thank you."
+    );
+
+    return;
+}
 
     document.getElementById(
     "status-panel"
